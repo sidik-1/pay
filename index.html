@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Methods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            text-align: center;
+            padding: 50px;
+            color: white;
+        }
+        .container {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            width: 100%;
+            max-width: 500px;
+        }
+        button {
+            background: #ff5e62;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #ff9966;
+        }
+        .payment-details {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .payment-options {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .payment-options input {
+            margin-right: 10px;
+        }
+
+        .payment-options label {
+            font-size: 1.1rem;
+        }
+
+        /* Popup styles */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .popup-content button {
+            background: #ff5e62;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function showDetails() {
+            let selectedPayment = document.querySelector('input[name="payment"]:checked');
+            
+            document.getElementById('details-bank').style.display = 'none';
+            document.getElementById('details-upi').style.display = 'none';
+            document.getElementById('details-qr').style.display = 'none';
+            
+            if (!selectedPayment) {
+                alert("Please select a payment method first.");
+                return;
+            }
+            
+            let paymentMethod = selectedPayment.value;
+            
+            if (paymentMethod === "bank") {
+                document.getElementById('details-bank').style.display = 'block';
+            } else if (paymentMethod === "upi") {
+                document.getElementById('details-upi').style.display = 'block';
+            } else if (paymentMethod === "qr") {
+                document.getElementById('details-qr').style.display = 'block';
+            }
+        }
+        
+        function confirmPayment() {
+            // Show the success popup
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function continueShopping() {
+            // Redirect to Flipkart when "Continue Shopping" is clicked
+            window.location.href = 'https://www.flipkart.com';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Select Payment Method</h2>
+        <form id="paymentForm">
+            <div class="payment-options">
+                <input type="radio" name="payment" value="bank" onclick="showDetails()"> 
+                <label>Bank Transfer</label><br>
+                <input type="radio" name="payment" value="upi" onclick="showDetails()"> 
+                <label>UPI</label><br>
+                <input type="radio" name="payment" value="qr" onclick="showDetails()"> 
+                <label>QR Code</label><br>
+            </div>
+        </form>
+
+        <!-- Bank Payment Details -->
+        <div id="details-bank" class="payment-details">
+            <h3>Bank Transfer Details</h3>
+            <p>AC NO - 040010072888</p>
+            <p>IFSC - IPOS00000001</p>
+            <button onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+
+        <!-- UPI Payment Details -->
+        <div id="details-upi" class="payment-details">
+            <h3>UPI Payment Details</h3>
+            <p>UPI ID - sidik@ybl</p>
+            <button onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+
+        <!-- QR Code Payment Details -->
+        <div id="details-qr" class="payment-details">
+            <h3>Scan QR Code</h3>
+            <img src="https://i.ibb.co/93yvVGhb/Screenshot-2025-02-01-215137.png" alt="QR Code">
+            <button onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="popup">
+        <div class="popup-content">
+            <h3>Order Successful!</h3>
+            <button onclick="continueShopping()">Continue Shopping</button>
+        </div>
+    </div>
+</body>
+</html>
